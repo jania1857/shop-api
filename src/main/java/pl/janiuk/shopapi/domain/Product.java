@@ -30,10 +30,10 @@ public class Product {
     @Basic
     @Column(name = "price")
     private Double price;
-    @OneToMany(mappedBy = "productByProductId")
+    @OneToMany(mappedBy = "productByProductId", cascade = CascadeType.ALL)
     private Collection<ChangesInStock> changesInStocksByProductId;
-    @OneToMany(mappedBy = "productByProductId")
+    @OneToMany(mappedBy = "productByProductId", cascade = CascadeType.ALL)
     private Collection<ProductCategories> productCategoriesByProductId;
-    @OneToMany(mappedBy = "productByProductId")
+    @OneToMany(mappedBy = "productByProductId", cascade = CascadeType.ALL)
     private Collection<ProductInCart> productInCartsByProductId;
 }

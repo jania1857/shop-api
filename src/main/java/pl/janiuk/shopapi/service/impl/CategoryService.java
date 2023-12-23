@@ -30,4 +30,7 @@ public class CategoryService implements ICategoryService {
     public List<Category> list() {
         return categoryRepository.findAll();
     }
+    public boolean existsById(int id) {
+        return categoryRepository.existsById(id);
+    }
 }

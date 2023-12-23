@@ -14,11 +14,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "product_categories", schema = "public", catalog = "shop_db")
 @IdClass(ProductCategoriesPK.class)
 public class ProductCategories {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "category_id")
     private int categoryId;
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "product_id")
     private int productId;

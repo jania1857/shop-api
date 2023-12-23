@@ -8,4 +8,5 @@ public interface ICategoryService {
     Category create(String name);
     void delete(int id);
     List<Category> list();
+    boolean existsById(int id);
 }
