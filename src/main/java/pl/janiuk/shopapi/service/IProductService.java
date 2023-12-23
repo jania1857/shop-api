@@ -1,6 +1,5 @@
 package pl.janiuk.shopapi.service;
 
-import pl.janiuk.shopapi.domain.Category;
 import pl.janiuk.shopapi.domain.Product;
 import pl.janiuk.shopapi.domain.ProductCategories;
 
