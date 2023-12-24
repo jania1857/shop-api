@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -34,4 +35,9 @@ public class ChangesInStock {
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private Product productByProductId;
+    @PrePersist
+    public void prePersis() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        this.changeDate = Date.valueOf(localDateTime.toLocalDate());
+    }
 }
