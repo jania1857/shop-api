@@ -21,6 +21,9 @@ public class Cart {
     @Basic
     @Column(name = "client_id")
     private Integer clientId;
+    @Basic
+    @Column(name = "ordered")
+    private boolean ordered;
     @ManyToOne
     @JoinColumn(name = "client_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Client clientByClientId;
