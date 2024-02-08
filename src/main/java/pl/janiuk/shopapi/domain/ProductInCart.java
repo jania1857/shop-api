@@ -14,11 +14,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "product_in_cart", schema = "public", catalog = "shop_db")
 @IdClass(ProductInCartPK.class)
 public class ProductInCart {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "cart_id", insertable = false, updatable = false)
     private int cartId;
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "product_id")
     private int productId;

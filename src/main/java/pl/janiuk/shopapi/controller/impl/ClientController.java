@@ -7,10 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.janiuk.shopapi.controller.IClientController;
 import pl.janiuk.shopapi.domain.Client;
 import pl.janiuk.shopapi.dto.client.ClientResponse;
-import pl.janiuk.shopapi.dto.client.LoginRequest;
-import pl.janiuk.shopapi.dto.client.LoginResponse;
 import pl.janiuk.shopapi.dto.client.RegisterRequest;
-import pl.janiuk.shopapi.exception.InvalidCredentialsException;
+import pl.janiuk.shopapi.service.ICartService;
 import pl.janiuk.shopapi.service.IClientService;
 
 import java.util.List;
@@ -19,9 +17,11 @@ import java.util.Optional;
 @RestController
 public class ClientController implements IClientController {
     private final IClientService clientService;
+    private final ICartService cartService;
     @Autowired
-    public ClientController(IClientService clientService) {
+    public ClientController(IClientService clientService, ICartService cartService) {
         this.clientService = clientService;
+        this.cartService = cartService;
     }
     @Override
     public ResponseEntity<ClientResponse> register(RegisterRequest request) {
@@ -38,20 +38,10 @@ public class ClientController implements IClientController {
                     savedClient.getLastname(),
                     "ROLE_CLIENT"
             );
+            cartService.create(savedClient.getId());
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
-        }
-    }
-    @Override
-    public ResponseEntity<LoginResponse> login(LoginRequest request) {
-        try {
-            LoginResponse response = new LoginResponse(
-                    clientService.generateJwt(request.username(), request.password())
-            );
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (InvalidCredentialsException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
     @Override

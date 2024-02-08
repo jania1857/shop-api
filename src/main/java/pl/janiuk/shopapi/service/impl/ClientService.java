@@ -4,11 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.janiuk.shopapi.domain.Client;
-import pl.janiuk.shopapi.exception.InvalidCredentialsException;
 import pl.janiuk.shopapi.repository.ClientRepository;
 import pl.janiuk.shopapi.repository.RoleRepository;
 import pl.janiuk.shopapi.service.IClientService;
-import pl.janiuk.shopapi.service.IJwtTokenService;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,13 +16,11 @@ public class ClientService implements IClientService {
     private final ClientRepository clientRepository;
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder passwordEncoder;
-    private final IJwtTokenService jwtTokenService;
     @Autowired
-    public ClientService(ClientRepository clientRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder, IJwtTokenService jwtTokenService) {
+    public ClientService(ClientRepository clientRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder) {
         this.clientRepository = clientRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
-        this.jwtTokenService = jwtTokenService;
     }
     @Override
     public Client create(String firstname, String lastname, String username, String password) {
@@ -45,6 +41,12 @@ public class ClientService implements IClientService {
     public Optional<Client> single(int id) {
         return clientRepository.findById(id);
     }
+
+    @Override
+    public Optional<Client> singleByUsername(String username) {
+        return Optional.of(clientRepository.findClientByUsername(username));
+    }
+
     @Override
     public List<Client> list() {
         return clientRepository.findAll();
@@ -60,19 +62,15 @@ public class ClientService implements IClientService {
         return Optional.empty();
     }
     @Override
-    public String generateJwt(String username, String password) throws InvalidCredentialsException {
-
-        Client client = clientRepository.findClientByUsername(username);
-        if (client != null && passwordEncoder.matches(password, client.getPassword())) {
-            return jwtTokenService.generateToken(client);
-        } else {
-            throw new InvalidCredentialsException();
-        }
-    }
-    @Override
     public Boolean existsById(int id) {
         return clientRepository.existsById(id);
     }
+
+    @Override
+    public Client findByUsername(String username) {
+        return clientRepository.findClientByUsername(username);
+    }
+
     private boolean checkIfUserExists(String username) {
         return clientRepository.existsByUsername(username);
     }

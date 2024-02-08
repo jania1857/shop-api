@@ -3,8 +3,6 @@ package pl.janiuk.shopapi.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.janiuk.shopapi.dto.client.ClientResponse;
-import pl.janiuk.shopapi.dto.client.LoginRequest;
-import pl.janiuk.shopapi.dto.client.LoginResponse;
 import pl.janiuk.shopapi.dto.client.RegisterRequest;
 
 import java.util.List;
@@ -13,8 +11,6 @@ import java.util.List;
 public interface IClientController {
     @PostMapping("/register")
     ResponseEntity<ClientResponse> register(@RequestBody RegisterRequest request);
-    @PostMapping("/login")
-    ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request);
     @GetMapping
     ResponseEntity<List<ClientResponse>> listClients();
     @GetMapping("/{clientId}")
