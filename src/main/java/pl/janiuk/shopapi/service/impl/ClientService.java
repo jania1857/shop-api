@@ -43,11 +43,6 @@ public class ClientService implements IClientService {
     }
 
     @Override
-    public Optional<Client> singleByUsername(String username) {
-        return Optional.of(clientRepository.findClientByUsername(username));
-    }
-
-    @Override
     public List<Client> list() {
         return clientRepository.findAll();
     }
