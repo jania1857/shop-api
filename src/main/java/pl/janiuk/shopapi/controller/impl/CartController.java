@@ -113,6 +113,21 @@ public class CartController implements ICartController {
         }
     }
 
+    @Override
+    public ResponseEntity<CartResponse> getActiveCart(Authentication authentication) {
+        try {
+            int cartId = getCartId(authentication);
+            Optional<Cart> foundCart = cartService.single(cartId);
+            if (foundCart.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            CartResponse response = cartToCartResponse(foundCart.get());
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
     private CartResponse cartToCartResponse(Cart cart) {
         return new CartResponse(
                 cart.getId(),

@@ -28,7 +28,7 @@ public class ChangesInStatus {
     @Basic
     @Column(name = "change_date")
     private Date changeDate;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "status_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Status statusByStatusId;
     @ManyToOne

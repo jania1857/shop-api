@@ -25,4 +25,6 @@ public interface ICartController {
     ResponseEntity<CartResponse> removeProductFromCart(Authentication authentication, @RequestBody RemoveProductRequest request);
     @PatchMapping
     ResponseEntity<CartResponse> changeProductQuantity(Authentication authentication, @RequestBody CartRequest request);
+    @GetMapping("/active")
+    ResponseEntity<CartResponse> getActiveCart(Authentication authentication);
 }
