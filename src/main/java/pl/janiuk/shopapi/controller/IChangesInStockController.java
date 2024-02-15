@@ -7,7 +7,7 @@ import pl.janiuk.shopapi.dto.changesinstock.CreateChangesInStockRequest;
 
 import java.util.List;
 
-@RequestMapping("/v1/api/changes_in_stock")
+@RequestMapping("/api/v1/changes_in_stock")
 public interface IChangesInStockController {
     @PostMapping
     ResponseEntity<ChangesInStockResponse> createChangeInStock(@RequestBody CreateChangesInStockRequest request);
