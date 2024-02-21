@@ -45,7 +45,6 @@ public class SecurityConfiguration {
 
                         .requestMatchers("/api/v1/cart/owned")
                         .hasAuthority("ROLE_CLIENT")
-
                         .anyRequest()
                         .authenticated()
                 )

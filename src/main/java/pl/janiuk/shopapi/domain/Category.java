@@ -21,6 +21,6 @@ public class Category {
     @Basic
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "categoryByCategoryId")
+    @OneToMany(mappedBy = "categoryByCategoryId", cascade = CascadeType.ALL)
     private Collection<ProductCategories> productCategoriesByCategoryId;
 }

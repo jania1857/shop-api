@@ -13,7 +13,7 @@ public interface IAddressController {
     @PostMapping
     ResponseEntity<AddressResponse> addAddress(Authentication authentication, @RequestBody AddressRequest request);
     @DeleteMapping("/{addressId}")
-    void deleteAddress(@PathVariable int addressId, Authentication authentication);
+    ResponseEntity<?> deleteAddress(@PathVariable int addressId, Authentication authentication);
     @GetMapping("/{clientId}")
     ResponseEntity<List<AddressResponse>> clientAddresses(@PathVariable int clientId);
     @GetMapping

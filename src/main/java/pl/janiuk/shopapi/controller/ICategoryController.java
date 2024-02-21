@@ -12,7 +12,9 @@ public interface ICategoryController {
     @PostMapping
     ResponseEntity<CategoryResponse> createCategory(@RequestBody CreateCategoryRequest request);
     @DeleteMapping("/{id}")
-    ResponseEntity<String> deleteCategory(@PathVariable int id);
+    ResponseEntity<?> deleteCategory(@PathVariable int id);
     @GetMapping
     ResponseEntity<List<CategoryResponse>> listCategories();
+    @GetMapping("/{id}")
+    ResponseEntity<CategoryResponse> singleCategory(@PathVariable int id);
 }

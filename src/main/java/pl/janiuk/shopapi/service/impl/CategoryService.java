@@ -7,6 +7,7 @@ import pl.janiuk.shopapi.repository.CategoryRepository;
 import pl.janiuk.shopapi.service.ICategoryService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryService implements ICategoryService {
@@ -32,5 +33,10 @@ public class CategoryService implements ICategoryService {
     }
     public boolean existsById(int id) {
         return categoryRepository.existsById(id);
+    }
+
+    @Override
+    public Optional<Category> single(int id) {
+        return categoryRepository.findById(id);
     }
 }

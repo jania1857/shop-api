@@ -1,6 +1,7 @@
 package pl.janiuk.shopapi.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import pl.janiuk.shopapi.dto.client.ClientResponse;
 import pl.janiuk.shopapi.dto.client.RegisterRequest;
@@ -17,4 +18,6 @@ public interface IClientController {
     ResponseEntity<ClientResponse> singleClient(@PathVariable int clientId);
     @PatchMapping("/{clientId}/{roleId}")
     ResponseEntity<ClientResponse> changeClientRole(@PathVariable int clientId, @PathVariable int roleId);
+    @PostMapping("/login")
+    ResponseEntity<ClientResponse> login(Authentication authentication);
 }

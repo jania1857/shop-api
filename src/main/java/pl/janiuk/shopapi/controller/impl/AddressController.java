@@ -42,7 +42,7 @@ public class AddressController implements IAddressController {
     }
 
     @Override
-    public void deleteAddress(int addressId, Authentication authentication) {
+    public ResponseEntity<?> deleteAddress(int addressId, Authentication authentication) {
         int clientId = getClientId(authentication);
         List<Address> addressList = addressService.clientAddresses(clientId);
         Address addressToDelete = addressList.stream()
@@ -51,7 +51,9 @@ public class AddressController implements IAddressController {
                 .orElse(null);
         if(!(addressToDelete == null)) {
             addressService.delete(addressId);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @Override

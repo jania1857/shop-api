@@ -11,6 +11,7 @@ import pl.janiuk.shopapi.dto.category.CategoryResponse;
 import pl.janiuk.shopapi.service.ICategoryService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class CategoryController implements ICategoryController {
@@ -43,5 +44,19 @@ public class CategoryController implements ICategoryController {
                 category.getName()
         )).toList();
         return new ResponseEntity<>(categoryResponseList, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<CategoryResponse> singleCategory(int id) {
+        Optional<Category> foundCategory = categoryService.single(id);
+        if (foundCategory.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Category category = foundCategory.get();
+        CategoryResponse response = new CategoryResponse(
+                category.getId(),
+                category.getName()
+        );
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

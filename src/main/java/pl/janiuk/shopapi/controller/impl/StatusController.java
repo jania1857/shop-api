@@ -5,8 +5,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import pl.janiuk.shopapi.controller.IStatusController;
 import pl.janiuk.shopapi.domain.ChangesInStatus;
+import pl.janiuk.shopapi.domain.Status;
 import pl.janiuk.shopapi.dto.status.ChangeInStatusRequest;
 import pl.janiuk.shopapi.dto.status.ChangeInStatusResponse;
+import pl.janiuk.shopapi.dto.status.StatusResponse;
 import pl.janiuk.shopapi.service.IStatusService;
 
 import java.util.List;
@@ -35,12 +37,26 @@ public class StatusController implements IStatusController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity<List<StatusResponse>> listStatuses() {
+        List<Status> statuses = statusService.list();
+        List<StatusResponse> response = statuses.stream().map(this::statusToStatusResponse).toList();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     private ChangeInStatusResponse changeInStatusToChangeInStatusResponse(ChangesInStatus changesInStatus) {
         return new ChangeInStatusResponse(
                 changesInStatus.getId(),
                 changesInStatus.getChangeDate(),
                 changesInStatus.getOrderId(),
                 changesInStatus.getStatusByStatusId().getName()
+        );
+    }
+
+    private StatusResponse statusToStatusResponse(Status status) {
+        return new StatusResponse(
+                status.getId(),
+                status.getName()
         );
     }
 }
